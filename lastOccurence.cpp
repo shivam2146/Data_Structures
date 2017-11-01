@@ -22,19 +22,19 @@ int main()
   while (testCases > 0){
     fastscan(numEle);
     int arr[numEle],occurance[1000001];   
-    std::fill_n(occurance, 1000001, -1);
-    for (int i=0;i <numEle;i++){
+    std::fill_n(occurance, 1000001, -1);    // to initialize whole array with any value other than 0
+    for (int i=0; i < numEle; i++){
   	    fastscan(arr[i]);
-  	    occurance[arr[i]]=i+1;
+  	    occurance[arr[i]] = i + 1;
     }
     int numQueries,x;
     fastscan(numQueries);
     for (int i=0; i < numQueries; i++){
         fastscan(x);
         if (x <= 1000000)
-  	        cout<<occurance[x]<<"\n";
+  	        cout << occurance[x] << "\n";
   	    else
-  	        cout<<"-1"<<"\n";
+  	        cout << "-1" << "\n";
      }
      testCases--;
     }
