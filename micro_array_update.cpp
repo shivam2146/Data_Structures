@@ -7,8 +7,10 @@ int main(){
     for(i=0;i<test_case_count;i++){
         cin>>n;
         cin>>k;
-        int arr[n],min=1000000;
-        for(int j=0;j<n;j++){
+        int arr[n],min;
+	    cin>>a[0];
+	    min=a[0];
+        for(int j=1;j<n;j++){
             cin>>arr[j];
             if(arr[j]<min)
                 min=arr[j];
@@ -19,7 +21,7 @@ int main(){
            while(flag==0){
                 flag=1;
                 min++;
-				if(min<k)
+		if(min<k)    
                     flag=0;
            		
                c++;
