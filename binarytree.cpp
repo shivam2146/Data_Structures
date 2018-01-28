@@ -145,7 +145,7 @@ node* BinaryTree::deepest_node(){
 }
 int BinaryTree::height(node *t){
   if(t == NULL)
-    return -1;
+    return 0;
   else{
     int l = height(t->left);
     int h= height(t->right);
@@ -158,11 +158,12 @@ int BinaryTree::diameter(node *t){
     //height of left and right subtree
     int lheight= height(t->left);
     int rheight= height(t->right);
+
     //diameter of left and right subtree
     int ldiameter= diameter(t->left);
     int rdiameter= diameter(t->right);
 
-    return max(lheight+rheight+1, max(ldiameter,rdiameter));
+    return max(lheight+rheight, max(ldiameter,rdiameter));
 }
 void BinaryTree::delete_n(node *t){
     if(t == NULL)
