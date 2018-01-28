@@ -1,4 +1,6 @@
 #include <iostream>
+#include<cstdlib>
+#include<cstdio>
 #include<queue>
 #include<stack>
 using namespace std;
@@ -7,6 +9,10 @@ struct node{
   node *left;
   node *right;
 };
+int max(int a, int b)
+{
+  return (a >= b)? a: b;
+}
 class BinaryTree{
     node *root;
     void preorder(node *t);
@@ -17,6 +23,7 @@ class BinaryTree{
     int size(node *t);
     void delete_n(node *t);
     int height(node *t);
+    int diameter(node *t);
 
    /////////////public funcs //////////////////
 
@@ -25,13 +32,13 @@ class BinaryTree{
     ~BinaryTree(){}
     node* deepest_node();
     void rpreorder(){
-      node *t = root;
-      if(!root)
+        node *t = root;
+        if(!root)
         return;
-      cout<<"\npreorder travesal of tree: ";
-      preorder(t);
-      t = NULL;
-     }
+        cout<<"\npreorder travesal of tree: ";
+        preorder(t);
+        t = NULL;
+    }
      void rinorder(){
        if(!root)
          return;
@@ -80,8 +87,46 @@ class BinaryTree{
        return search(root,ele);
      }
      void rev_levelorder();
+     void delete_ele(int ele);
+     int rdiameter(){
+       if(!root)
+        return 0;
+       else{
+         node *temp = root;
+         return diameter(temp);
+      }
+     }
 };
-
+void BinaryTree::delete_ele(int ele){
+  node *temp = root, *del;
+  node *deep = deepest_node();
+  queue<node *> q;
+  q.push(temp);
+  while(!q.empty()){
+    temp = q.front();
+    if(temp->data == ele){
+      del = temp;
+    }
+    if(temp-> left == deep){
+      temp->left = NULL;
+    }
+    else if(temp->right == deep){
+      temp->right = NULL;
+    }
+    if(temp->left != NULL)
+      q.push(temp->left);
+    if(temp->right != NULL)
+      q.push(temp->right);
+    q.pop();
+  }
+  if(del == NULL) {
+    cout<<"node with given data already doesn't exist";
+    return;
+  }
+  cout<<"\nnode with data " <<del->data <<" deleted";
+  del-> data = deep->data;
+  delete deep;
+}
 node* BinaryTree::deepest_node(){
       queue<node*> q;
       node *temp;
@@ -107,6 +152,18 @@ int BinaryTree::height(node *t){
      return (l>h)? l+1 : h+1;
   }
 }
+int BinaryTree::diameter(node *t){
+    if(!t)
+      return 0;
+    //height of left and right subtree
+    int lheight= height(t->left);
+    int rheight= height(t->right);
+    //diameter of left and right subtree
+    int ldiameter= diameter(t->left);
+    int rdiameter= diameter(t->right);
+
+    return max(lheight+rheight+1, max(ldiameter,rdiameter));
+}
 void BinaryTree::delete_n(node *t){
     if(t == NULL)
       return;
@@ -114,11 +171,7 @@ void BinaryTree::delete_n(node *t){
       delete_n(t->left);
       delete_n(t->right);
       if(t == root)             //this is to make root null so root doesn't points to a garbage location
-        {
-          t->left = NULL;
-          t->right = NULL;
-          root =NULL;
-        }
+        root = NULL;
       delete t;
     }
 }
@@ -322,8 +375,8 @@ int main(){
   t.insert(3);
   t.insert(4);
   t.insert(5);
-  t.insert(6);
-  t.insert(7);
+  //t.insert(6);
+  //t.insert(7);
   t.bfs();
   t.rpreorder();
   t.rinorder();
@@ -336,9 +389,12 @@ int main(){
   cout << "\nMax ele: "<< t.rmax();
   cout<<"\nsize of binary tree: "<<t.rsize();
   cout<<"\nheight of tree : "<<t.rheight();
+  cout<<"\ndiameter of tree: "<<t.rdiameter();
   node *d = t.deepest_node();
   if(d != NULL)
   cout<<"\ndeepest node of tree "<< d->data;
+  t.delete_ele(3);
+  cout<<"\nsize of binary tree: "<<t.rsize();
   t.bfs();
   t.rdelete();
   cout<<"\nsize of binary tree: "<<t.rsize();
