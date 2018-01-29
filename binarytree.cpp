@@ -24,6 +24,8 @@ class BinaryTree{
     void delete_n(node *t);
     int height(node *t);
     int diameter(node *t);
+    void paths(node *t,int path[],int len);
+    void print_path(int path[],int len);
 
    /////////////public funcs //////////////////
 
@@ -96,7 +98,29 @@ class BinaryTree{
          return diameter(temp);
       }
      }
+     void r_paths(){
+       node *temp = root;
+       int arr[1000000];
+       paths(temp,arr,0);
+     }
 };
+void BinaryTree::print_path(int arr[],int len){
+  printf("\npath is: ");
+  for(int i=0; i<len; i++)
+    printf("%d ",arr[i]);
+}
+void BinaryTree::paths(node *t, int path[],int len){
+  if(t == NULL)
+    return;
+  path[len]= t->data;
+  len++;
+  if(t->left == NULL && t->right == NULL)
+      print_path(path,len);
+  else{
+    paths(t->left,path,len);
+    paths(t->right,path,len);
+  }
+}
 void BinaryTree::delete_ele(int ele){
   node *temp = root, *del;
   node *deep = deepest_node();
@@ -376,8 +400,8 @@ int main(){
   t.insert(3);
   t.insert(4);
   t.insert(5);
-  //t.insert(6);
-  //t.insert(7);
+  t.insert(6);
+  t.insert(7);
   t.bfs();
   t.rpreorder();
   t.rinorder();
@@ -386,6 +410,7 @@ int main(){
   t.i_inorder();
   t.i_postorder();
   t.rev_levelorder();
+  t.r_paths();
   cout<<"\nsearch for 9 returned: "<<t.rsearch(9);
   cout << "\nMax ele: "<< t.rmax();
   cout<<"\nsize of binary tree: "<<t.rsize();
