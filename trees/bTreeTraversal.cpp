@@ -16,7 +16,6 @@ class BTree{
   void preorder(node <T>*temp);
   void inorder(node<T> *temp);
   void postorder(node<T>*temp);
-  bool insert(node <T>*temp,node <T>*data);
 public:
   BTree(){
     root = NULL;
