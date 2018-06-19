@@ -160,35 +160,32 @@ void BTree<T>::insert(T data){
     d->data = data;
     d->left = NULL;
     d->right = NULL;
-    if(root)
-      insert(root,d);
-    else
-      root = d;
+    if(!root){
+        root = d;
+        return;
+    }
+    queue<node<T>*> q;
+    q.push(root);
+    while(!q.empty()){
+      node<T> *temp = q.front();
+      if(temp->left)
+        q.push(temp->left);
+      else{
+        temp->left = d;
+        break;
+      }
+      if(temp->right)
+        q.push(temp->right);
+      else{
+        temp->right = d;
+        break;
+      }
+      q.pop();
+    }
+    q = queue<node<T>*>();
 }
 
-template <typename T>
-bool BTree<T>::insert(node <T> *temp,node<T> *data){
-  if(!temp->left){
-    temp->left = data;
-    return 1;
-  }
-  else if(!temp->right){
-    temp->right= data;
-    return 1;
-  }
-  else{
-    bool f = insert(temp->left,data);
-    if(!f){
-    bool f1= insert(temp->right,data);
-      if(!f1)
-        return 0;
-      else
-        return 1;
-    }
-    else
-      return 1;
-  }
-}
+
 
 int main(){
   BTree<int> t;
@@ -198,6 +195,7 @@ int main(){
   t.insert(8);
   t.insert(9);
   t.insert(2);
+  t.insert(7);
   t.levelOrder();
   t.preorder();
   t.iPreorder();
