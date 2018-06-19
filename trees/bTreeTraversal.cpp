@@ -28,6 +28,7 @@ public:
   void iInorder();
   void postorder();
   void iPostorder();
+  void levelOrder();
 };
 
 template <typename T>
@@ -137,6 +138,22 @@ void BTree<T>::iPostorder(){
 }
 
 template <typename T>
+void BTree<T>::levelOrder(){
+  queue<node<T>*> q;
+  q.push(root);
+  cout<<"\nLevel order Traversal: ";
+  while(!q.empty()){
+    node<T> *temp = q.front();
+    cout<<temp->data<<" ";
+    if(temp->left)
+      q.push(temp->left);
+    if(temp->right)
+      q.push(temp->right);
+    q.pop();
+  }
+}
+
+template <typename T>
 void BTree<T>::insert(T data){
     cout<<"\ninserting element "<<data;
     node <T> *d = new node<T>;
@@ -181,6 +198,7 @@ int main(){
   t.insert(8);
   t.insert(9);
   t.insert(2);
+  t.levelOrder();
   t.preorder();
   t.iPreorder();
   t.inorder();
