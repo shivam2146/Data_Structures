@@ -33,13 +33,13 @@ bool BTree<T>::ancestors(node<T>*temp,T data){
     return false;
   if(temp->data == data)
     return true;
-    bool left = ancestors(temp->left,data) ;
-    bool right = false;
-    if(!left)
-    right =  ancestors(temp->right,data);
-    if(left||right)
-      cout<<temp->data<<" ";
-    return left||right;
+  bool left = ancestors(temp->left,data) ;
+  bool right = false;
+  if(!left)
+  right =  ancestors(temp->right,data);
+  if(left||right)
+    cout<<temp->data<<" ";
+  return left||right;
 }
 
 template <typename T>
