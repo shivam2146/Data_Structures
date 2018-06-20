@@ -30,10 +30,32 @@ int findDuplicate2(int arr[],int n){
     return dup;
 }
 
+//using xor
+int findDuplicate3(int arr[],int n){
+  int dup=arr[0];
+  for(int i=1; i<n ;i++)
+    dup = dup ^ arr[i];
+  for(int i=1;i<n;i++)
+    dup = dup ^ i;
+  return dup;
+}
+
+//using add and sub
+int findDuplicate4(int arr[],int n){
+  int dup=arr[0];
+  for(int i=1; i<n ;i++)
+    dup = dup + arr[i];
+  for(int i=1;i<n;i++)
+    dup = dup - i;
+  return dup;
+}
+
 int main(){
-  int arr[]= {1,1,3,4,3,5};
+  int arr[]= {1,2,3,4,4,};  //arr contains ele from 1 to n-1
   int n = sizeof(arr)/sizeof(arr[0]);
   cout<<"duplicate element is: "<<findDuplicate(arr,n)<<endl;
   cout<<"duplicate element is: "<<findDuplicate2(arr,n)<<endl;
+  cout<<"duplicate element is: "<<findDuplicate3(arr,n)<<endl;
+  cout<<"duplicate element is: "<<findDuplicate4(arr,n)<<endl;
   return 0;
 }
