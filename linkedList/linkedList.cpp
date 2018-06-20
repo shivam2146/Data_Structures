@@ -15,6 +15,7 @@ public:
     head = NULL;
   }
   void insertAtHead(int);
+  void insertAtTail(int);
   void print();
 };
 
@@ -34,6 +35,22 @@ void LinkedList<T>::insertAtHead(int key){
 }
 
 template<typename T>
+void LinkedList<T>::insertAtTail(int key){
+  node<T> *temp = new node<T>;
+  temp->data = key;
+  temp->next = NULL;
+  if(!head){
+    head = temp;
+    temp = NULL;
+    return;
+  }
+  node<T> *t = head;
+  for(;t->next!=NULL;t= t->next);
+  t->next = temp;
+  temp = NULL;
+}
+
+template<typename T>
 void LinkedList<T>::print(){
 
   node<T> *temp = head;
@@ -44,10 +61,11 @@ void LinkedList<T>::print(){
 
 int main(){
   LinkedList<int> l;
-  l.insertAtHead(5);
   l.insertAtHead(1);
   l.insertAtHead(10);
+  l.insertAtTail(5);
   l.insertAtHead(12);
+  l.insertAtTail(13);
   l.insertAtHead(63);
   l.insertAtHead(8);
   l.print();
