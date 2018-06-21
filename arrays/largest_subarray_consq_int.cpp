@@ -18,7 +18,7 @@ bool isConsecutive(int arr[],int i,int j,int max,int min){
 
 void largest_subarray(int arr[],int n){
   int i,j,max,min;
-  pair<int,int> largest_sub(-1,-1);
+  pair<int,int> largest_sub(0,0);
   for(i=0;i<n-1;i++){
     max= min =arr[i];
     for(j=i+1;j<n;j++){
